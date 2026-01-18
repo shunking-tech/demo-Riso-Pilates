@@ -1,0 +1,3 @@
+ShopifyのテーマDawnで利用できるようにセクションとしてliquidファイルを作成
+cssも含める
+セクションnameとlabelは日本語

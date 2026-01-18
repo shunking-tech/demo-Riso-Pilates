@@ -1,0 +1,235 @@
+<style>
+  .voice-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: #1a1a1a;
+  }
+
+  .section__header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section__title {
+    font-family: 'Cinzel', serif;
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: #8e24aa;
+  }
+
+  .section__subtitle {
+    font-size: 14.4px;
+    letter-spacing: 1.44px;
+    color: #888;
+  }
+
+  .voice__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+  }
+
+  .voice-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .voice-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #8e24aa;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  }
+
+  .voice-card__image {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
+  .voice-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .voice-card:hover .voice-card__image img {
+    transform: scale(1.05);
+  }
+
+  .voice-card__content {
+    padding: 30px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .voice-card__text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #ddd;
+    margin-bottom: 25px;
+    position: relative;
+    font-style: italic;
+  }
+
+  .voice-card__text::before {
+    content: '"';
+    font-size: 40px;
+    color: #8e24aa;
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    opacity: 0.3;
+  }
+
+  .voice-card__footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    margin-top: auto;
+  }
+
+  .voice-card__name {
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .voice-card__title {
+    font-size: 13px;
+    color: #d4af37;
+  }
+
+  @media (max-width: 768px) {
+    .voice-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | multiply: 0.8 | round }}px;
+      padding-bottom: {{ section.settings.padding_bottom | multiply: 0.8 | round }}px;
+    }
+  }
+</style>
+
+<section id="voice-{{ section.id }}" class="voice-{{ section.id }} voice">
+  <div class="container">
+    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+      <div class="section__header">
+        {%- if section.settings.title != blank -%}
+          <h2 class="section__title">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="section__subtitle">{{ section.settings.subtitle | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="voice__grid">
+      {%- for block in section.blocks -%}
+        <article class="voice-card" {{ block.shopify_attributes }}>
+          <div class="voice-card__image">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: block.settings.name }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+          </div>
+          <div class="voice-card__content">
+            <p class="voice-card__text">「{{ block.settings.text | escape }}」</p>
+            <div class="voice-card__footer">
+              <p class="voice-card__name">{{ block.settings.name | escape }}</p>
+              <p class="voice-card__title">{{ block.settings.title | escape }}</p>
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "お客様の声",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "タイトル",
+      "default": "Voice"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "サブタイトル",
+      "default": "導入実績・お客様の声"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "上部の余白",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "label": "下部の余白",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "voice",
+      "name": "声",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "画像"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "本文",
+          "default": "ここに感想を入力してください。"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "氏名",
+          "default": "お名前"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "肩書き",
+          "default": "役職・肩書き"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "お客様の声",
+      "blocks": [
+        { "type": "voice" },
+        { "type": "voice" },
+        { "type": "voice" }
+      ]
+    }
+  ]
+}
+{% endschema %}
