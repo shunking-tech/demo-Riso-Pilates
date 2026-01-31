@@ -8,6 +8,9 @@
     --font-main: 'Noto Sans JP', sans-serif;
     --font-display: 'Cinzel', serif;
     --header-height: 80px;
+
+    /* Consultation Colors/Styles if any additional - using existing */
+    --color-step-bg: rgba(255, 255, 255, 0.05);
 }
 
 *, *::before, *::after {
@@ -571,6 +574,184 @@ img {
     z-index: 1;
 }
 
+/* Consulting Page Styles */
+.hero--consulting {
+    height: 60vh;
+    min-height: 400px;
+}
+
+.problem {
+    background-color: #222;
+}
+
+.problem__list {
+    max-width: 800px;
+    margin: 40px auto 0;
+    display: grid;
+    gap: 20px;
+}
+
+.problem__item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 24px;
+    border-left: 4px solid var(--color-primary);
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.problem__item::before {
+    content: '!';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 50%;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.problem__text {
+    font-size: 16px;
+    color: #ddd;
+}
+
+.strength-card {
+    background: #2a2a2a;
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.strength-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-primary);
+}
+
+.strength-card__num {
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: rgba(142, 36, 170, 0.2);
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.strength-card__title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: var(--color-primary);
+}
+
+.strength-card__text {
+    font-size: 15px;
+    color: #bbb;
+    line-height: 1.8;
+}
+
+.flow__list {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.flow__item {
+    position: relative;
+    padding: 30px;
+    background: var(--color-step-bg);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.flow__num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--color-accent);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.flow__title {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #fff;
+    font-weight: 700;
+}
+
+.flow__text {
+    font-size: 14px;
+    color: #bbb;
+}
+
+.cta {
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('../assets/hero-bg.jpg') no-repeat center/cover;
+    padding: 120px 0;
+}
+
+.cta__inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.cta__title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.cta__text {
+    margin-bottom: 40px;
+    color: #ccc;
+}
+
+/* Training Page Styles */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.course-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.course-card__title {
+    font-size: 20px;
+    color: var(--color-accent);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.course-card__duration {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.course-card__text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #bbb;
+}
+
 /* Footer */
 .footer {
     background-color: #000;
@@ -667,6 +848,16 @@ img {
     }
 
     .hero__title-main {
-        font-size: 40px;
+        font-size: 32px;
+    }
+
+    .small-hide {
+        display: none;
+    }
+}
+
+@media (min-width: 769px) {
+    .large-hide {
+        display: none;
     }
 }
