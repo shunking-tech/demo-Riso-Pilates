@@ -1,0 +1,198 @@
+<style>
+  .section {
+      padding: 100px 0;
+  }
+
+  .section__header {
+      text-align: center;
+      margin-bottom: 60px;
+  }
+
+  .section__title {
+      font-family: var(--font-display, 'Cinzel', serif);
+      font-size: 40px;
+      margin-bottom: 10px;
+      color: var(--color-primary, #8e24aa);
+  }
+
+  .section__subtitle {
+      font-size: 14.4px;
+      letter-spacing: 1.44px;
+      color: #888;
+  }
+
+  .flow__list {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+  }
+
+  .flow__item {
+      position: relative;
+      padding: 30px;
+      background: var(--color-step-bg, rgba(255, 255, 255, 0.05));
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      height: 100%;
+  }
+
+  .flow__num {
+      display: block;
+      font-family: var(--font-display, 'Cinzel', serif);
+      font-size: 14px;
+      color: var(--color-accent, #d4af37);
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+  }
+
+  .flow__title {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #fff;
+      font-weight: 700;
+  }
+
+  .flow__text {
+      font-size: 14px;
+      color: #bbb;
+      line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+        padding: 60px 0;
+    }
+    .section__title {
+        font-size: 32px;
+    }
+    .flow__list {
+        gap: 20px;
+    }
+    .flow__item {
+        padding: 20px;
+    }
+  }
+</style>
+
+<section class="section flow">
+    <div class="container">
+        <div class="section__header">
+            <h2 class="section__title">{{ section.settings.title }}</h2>
+            <p class="section__subtitle">{{ section.settings.subtitle }}</p>
+        </div>
+        <div class="flow__list">
+            {%- for block in section.blocks -%}
+                <div class="flow__item" {{ block.shopify_attributes }}>
+                    {%- if block.settings.step_num != blank -%}
+                        <span class="flow__num">{{ block.settings.step_num }}</span>
+                    {%- endif -%}
+                    <h3 class="flow__title">{{ block.settings.title }}</h3>
+                    <div class="flow__text">{{ block.settings.text }}</div>
+                </div>
+            {%- endfor -%}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Step List",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Process"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "コンサルティングの流れ"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_num",
+          "label": "Step Number",
+          "default": "STEP 01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step Title",
+          "default": "ヒアリング"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Step Description",
+          "default": "<p>ステップの内容を記入してください。</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Step List",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_num": "STEP 01",
+            "title": "ヒアリング",
+            "text": "<p>物件状況、予算、目指すスタジオ像をお伺いします。</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_num": "STEP 02",
+            "title": "プランご提案",
+            "text": "<p>マシン構成、内装イメージ、収支シミュレーションを提示。</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_num": "STEP 03",
+            "title": "ご契約・着手",
+            "text": "<p>開業に向けたタスクを洗い出し、スケジュールを策定。</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_num": "STEP 04",
+            "title": "開業準備",
+            "text": "<p>マシン搬入、内装工事、スタッフ採用・研修の実施。</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_num": "STEP 05",
+            "title": "プレオープン",
+            "text": "<p>集客施策の開始とオペレーションの最終確認。</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_num": "STEP 06",
+            "title": "グランドオープン",
+            "text": "<p>開業後も定例ミーティングにて経営をサポートします。</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

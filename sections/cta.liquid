@@ -1,0 +1,97 @@
+<style>
+  .cta {
+      {%- if section.settings.image != blank -%}
+        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('{{ section.settings.image | img_url: '1600x' }}') no-repeat center/cover;
+      {%- else -%}
+        background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('{{ 'hero-bg.jpg' | asset_url }}') no-repeat center/cover;
+      {%- endif -%}
+      padding: 120px 0;
+  }
+
+  .cta__inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+  }
+
+  .cta__title {
+      font-family: var(--font-display, 'Cinzel', serif);
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #fff;
+  }
+
+  .cta__text {
+      margin-bottom: 40px;
+      color: #ccc;
+  }
+
+  /* 入力されたHTML内でもBRタグ等が効くように考慮 */
+  .cta__text p {
+      margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .cta {
+        padding: 80px 0;
+    }
+    .cta__title {
+        font-size: 24px;
+    }
+  }
+</style>
+
+<section class="section cta">
+    <div class="container">
+        <div class="cta__inner">
+            <h2 class="cta__title">{{ section.settings.title }}</h2>
+            <div class="cta__text">
+                {{ section.settings.text }}
+            </div>
+            {%- if section.settings.btn_label != blank -%}
+              <a href="{{ section.settings.btn_link }}" class="btn btn--primary">{{ section.settings.btn_label }}</a>
+            {%- endif -%}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "CTA (Training)",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "研修の導入・カリキュラムのご相談"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>貴社のスタッフレベルや課題に合わせて、<br>オリジナルの研修プランを作成することも可能です。</p>"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button Label",
+      "default": "お問い合わせフォームへ"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA (Training)"
+    }
+  ]
+}
+{% endschema %}

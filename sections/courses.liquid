@@ -1,0 +1,172 @@
+<style>
+  .section {
+      padding: 100px 0;
+  }
+
+  .section__header {
+      text-align: center;
+      margin-bottom: 60px;
+  }
+
+  .section__title {
+      font-family: var(--font-display, 'Cinzel', serif);
+      font-size: 40px;
+      margin-bottom: 10px;
+      color: var(--color-primary, #8e24aa);
+  }
+
+  .section__subtitle {
+      font-size: 14.4px;
+      letter-spacing: 1.44px;
+      color: #888;
+  }
+
+  .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+  }
+
+  .course-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+  }
+
+  .course-card__title {
+      font-size: 20px;
+      color: var(--color-accent, #d4af37);
+      margin-bottom: 10px;
+      font-weight: 700;
+  }
+
+  .course-card__duration {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .course-card__text {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #bbb;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+        padding: 60px 0;
+    }
+    .section__title {
+        font-size: 32px;
+    }
+    .course-grid {
+        gap: 20px;
+        margin-top: 30px;
+    }
+    .course-card {
+        padding: 20px;
+    }
+  }
+</style>
+
+<section class="section flow">
+    <div class="container">
+        <div class="section__header">
+            <h2 class="section__title">{{ section.settings.title }}</h2>
+            <p class="section__subtitle">{{ section.settings.subtitle }}</p>
+        </div>
+        <div class="course-grid">
+            {% for block in section.blocks %}
+                <div class="course-card" {{ block.shopify_attributes }}>
+                    <h3 class="course-card__title">{{ block.settings.title }}</h3>
+                    <p class="course-card__duration">{{ block.settings.duration }}</p>
+                    <div class="course-card__text">{{ block.settings.text }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Courses",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Courses"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "コース内容（例）"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "course",
+      "name": "Course Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Course Title",
+          "default": "ベーシックコース"
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "Duration",
+          "default": "期間：3日間"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Course Description",
+          "default": "<p>コースの概要について記入してください。</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Courses",
+      "blocks": [
+        {
+          "type": "course",
+          "settings": {
+            "title": "ベーシックコース",
+            "duration": "期間：3日間",
+            "text": "<p>ピラティスの基礎原理、マットピラティス、基礎解剖学を中心に学びます。</p>"
+          }
+        },
+        {
+          "type": "course",
+          "settings": {
+            "title": "マシンテクニカルコース",
+            "duration": "期間：5日間",
+            "text": "<p>リフォーマー等のマシン操作、初級〜中級エクササイズの実践を網羅します。</p>"
+          }
+        },
+        {
+          "type": "course",
+          "settings": {
+            "title": "セミパーソナル指導特化コース",
+            "duration": "期間：2日間",
+            "text": "<p>複数人指導のフォーメーション、メニュー構成、安全管理を具体的に習得します。</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

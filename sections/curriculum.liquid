@@ -1,0 +1,170 @@
+<style>
+  .section {
+      padding: 100px 0;
+  }
+
+  .section__header {
+      text-align: center;
+      margin-bottom: 60px;
+  }
+
+  .section__title {
+      font-family: var(--font-display, 'Cinzel', serif);
+      font-size: 40px;
+      margin-bottom: 10px;
+      color: var(--color-primary, #8e24aa);
+  }
+
+  .section__subtitle {
+      font-size: 14.4px;
+      letter-spacing: 1.44px;
+      color: #888;
+  }
+
+  .products__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+  }
+
+  .strength-card {
+      background: #2a2a2a;
+      padding: 40px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      height: 100%;
+      transition: transform 0.3s ease;
+  }
+
+  .strength-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--color-primary, #8e24aa);
+  }
+
+  .strength-card__num {
+      font-family: var(--font-display, 'Cinzel', serif);
+      font-size: 48px;
+      color: rgba(142, 36, 170, 0.2);
+      line-height: 1;
+      margin-bottom: 10px;
+  }
+
+  .strength-card__title {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: var(--color-primary, #8e24aa);
+  }
+
+  .strength-card__text {
+      font-size: 15px;
+      color: #bbb;
+      line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+        padding: 60px 0;
+    }
+    .section__title {
+        font-size: 32px;
+    }
+    .strength-card {
+        padding: 30px;
+    }
+  }
+</style>
+
+<section class="section strength">
+    <div class="container">
+        <div class="section__header">
+            <h2 class="section__title">{{ section.settings.title }}</h2>
+            <p class="section__subtitle">{{ section.settings.subtitle }}</p>
+        </div>
+        <div class="products__grid">
+            {% for block in section.blocks %}
+                <div class="strength-card" {{ block.shopify_attributes }}>
+                    <div class="strength-card__num">{{ block.settings.number }}</div>
+                    <h3 class="strength-card__title">{{ block.settings.title }}</h3>
+                    <div class="strength-card__text">{{ block.settings.text }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Curriculum",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Curriculum"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "カリキュラムの特徴"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Curriculum Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Card Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "マシンピラティス完全マスター"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Card Text",
+          "default": "<p>リフォーマー、キャデラック、チェア、バレル。全マシンの特性を理解し、安全かつ効果的な指導法を習得します。</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Curriculum",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "number": "01",
+            "title": "マシンピラティス完全マスター",
+            "text": "<p>リフォーマー、キャデラック、チェア、バレル。全マシンの特性を理解し、安全かつ効果的な指導法を習得します。特にセミパーソナル指導で重要となる「グループへの目配り」や「キューイング」も重点的に行います。</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "number": "02",
+            "title": "現場で使えるアジャストメント技術",
+            "text": "<p>クライアントの身体に触れて修正する技術は重要です。怪我をさせない安全な触れ方から、効果を最大化する修正テクニックまでを実践形式で学びます。</p>"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "number": "03",
+            "title": "接客・カウンセリング力",
+            "text": "<p>信頼関係を築くためのカウンセリング話法や、継続を促すクロージングスキルなど、ビジネス視点を持ったインストラクターを育てます。</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
