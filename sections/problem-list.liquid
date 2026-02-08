@@ -74,6 +74,29 @@
       margin: 0;
   }
 
+  .problem__warning {
+      text-align: center;
+      max-width: 800px;
+      margin: 60px auto 0;
+      padding: 40px;
+      background: rgba(142, 36, 170, 0.1);
+      border: 1px solid var(--color-primary, #8e24aa);
+      border-radius: 8px;
+  }
+
+  .problem__warning-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-primary, #8e24aa);
+      margin-bottom: 20px;
+  }
+
+  .problem__warning-text {
+      font-size: 16px;
+      color: #ccc;
+      line-height: 1.8;
+  }
+
   @media (max-width: 768px) {
     .section {
         padding: 60px 0;
@@ -83,6 +106,17 @@
     }
     .problem__item {
         padding: 16px;
+    }
+    .problem__warning {
+        padding: 30px 20px;
+        margin-top: 40px;
+    }
+    .problem__warning-title {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    .problem__warning-text {
+        font-size: 14px;
     }
   }
 </style>
@@ -105,6 +139,17 @@
                 </div>
             {%- endfor -%}
         </div>
+
+        {%- if section.settings.warning_title != blank or section.settings.warning_text != blank -%}
+          <div class="problem__warning">
+              {%- if section.settings.warning_title != blank -%}
+                <p class="problem__warning-title">{{ section.settings.warning_title }}</p>
+              {%- endif -%}
+              {%- if section.settings.warning_text != blank -%}
+                <p class="problem__warning-text">{{ section.settings.warning_text }}</p>
+              {%- endif -%}
+          </div>
+        {%- endif -%}
     </div>
 </section>
 
@@ -129,6 +174,22 @@
       "id": "intro_text",
       "label": "Intro Text",
       "default": "<p>これからスタジオを開業されるオーナー様へ。このような不安はありませんか？</p>"
+    },
+    {
+      "type": "header",
+      "content": "Warning Message"
+    },
+    {
+      "type": "text",
+      "id": "warning_title",
+      "label": "Warning Title",
+      "default": "「その考え、実は非常に危険です」"
+    },
+    {
+      "type": "textarea",
+      "id": "warning_text",
+      "label": "Warning Text",
+      "default": "店舗運営の9割が3年以内に廃業するという厳しい現実があります。成功の鍵は、オープン前の戦略にあります。"
     }
   ],
   "blocks": [
