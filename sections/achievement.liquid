@@ -1,0 +1,310 @@
+<style>
+  .achievement {
+      background-color: #222;
+      padding: 100px 0;
+  }
+
+  .achievement__intro {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 18px;
+      color: #fff;
+  }
+
+  .achievement__content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      margin-bottom: 60px;
+  }
+
+  .achievement__table-wrapper {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+  }
+
+  .achievement__table {
+      width: 100%;
+      border-collapse: collapse;
+  }
+
+  .achievement__table th, .achievement__table td {
+      padding: 20px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .achievement__table thead th {
+      background: rgba(142, 36, 170, 0.2);
+      color: var(--color-primary, #8e24aa);
+      font-family: var(--font-display, 'Cinzel', serif);
+  }
+
+  .achievement__table td.highlight {
+      color: var(--color-accent, #d4af37);
+      font-weight: 700;
+      font-size: 20px;
+  }
+
+  .achievement__chart img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+
+  .achievement__chart-caption {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #888;
+      text-align: center;
+  }
+
+  .achievement__impact {
+      background: #1a1a1a;
+      padding: 40px;
+      border-radius: 12px;
+      border: 1px solid rgba(142, 36, 170, 0.3);
+  }
+
+  .achievement__impact h3 {
+      font-size: 24px;
+      color: var(--color-primary, #8e24aa);
+      margin-bottom: 20px;
+      margin-top: 0;
+  }
+
+  .achievement__impact p {
+      color: #bbb;
+      line-height: 1.8;
+      margin: 0;
+  }
+
+  @media (max-width: 992px) {
+      .achievement__content {
+          grid-template-columns: 1fr;
+          gap: 30px;
+      }
+  }
+
+  @media (max-width: 768px) {
+      .achievement {
+          padding: 60px 0;
+      }
+      .achievement__impact h3 {
+          font-size: 20px;
+      }
+      .achievement__table th, .achievement__table td {
+          padding: 15px;
+      }
+  }
+</style>
+
+<section class="section achievement">
+    <div class="container">
+        <div class="section__header">
+            <h2 class="section__title">{{ section.settings.title }}</h2>
+            {%- if section.settings.subtitle != blank -%}
+              <p class="section__subtitle">{{ section.settings.subtitle }}</p>
+            {%- endif -%}
+        </div>
+        
+        {%- if section.settings.intro != blank -%}
+          <div class="achievement__intro">
+              {{ section.settings.intro }}
+          </div>
+        {%- endif -%}
+
+        <div class="achievement__content">
+            <div class="achievement__table-wrapper">
+                <table class="achievement__table">
+                    <thead>
+                        <tr>
+                            <th>{{ section.settings.table_header_label }}</th>
+                            <th>{{ section.settings.table_header_value }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%- for block in section.blocks -%}
+                          <tr {{ block.shopify_attributes }}>
+                              <td>{{ block.settings.label }}</td>
+                              <td class="{% if block.settings.highlight %}highlight{% endif %}">{{ block.settings.value }}</td>
+                          </tr>
+                        {%- endfor -%}
+                    </tbody>
+                </table>
+            </div>
+            <div class="achievement__chart">
+                {%- if section.settings.chart_image != blank -%}
+                  <img src="{{ section.settings.chart_image | img_url: '800x' }}" alt="{{ section.settings.title }}">
+                {%- else -%}
+                  <div style="background: #333; width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
+                    <p style="color: #666;">Graph Image Placeholder</p>
+                  </div>
+                {%- endif -%}
+                {%- if section.settings.chart_caption != blank -%}
+                  <p class="achievement__chart-caption">{{ section.settings.chart_caption }}</p>
+                {%- endif -%}
+            </div>
+        </div>
+
+        {%- if section.settings.impact_title != blank or section.settings.impact_text != blank -%}
+          <div class="achievement__impact">
+              {%- if section.settings.impact_title != blank -%}
+                <h3>{{ section.settings.impact_title }}</h3>
+              {%- endif -%}
+              {%- if section.settings.impact_text != blank -%}
+                <div class="achievement__impact-body">
+                  {{ section.settings.impact_text }}
+                </div>
+              {%- endif -%}
+          </div>
+        {%- endif -%}
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Achievement",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Result"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section Subtitle",
+      "default": "私たちが提案するのは「机上の空論」ではありません。"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro Text",
+      "default": "<p>2024年1月オープン、自社スタジオのリアルな数字を公開します。</p>"
+    },
+    {
+      "type": "header",
+      "content": "Table Settings"
+    },
+    {
+      "type": "text",
+      "id": "table_header_label",
+      "label": "Table Label Column Header",
+      "default": "項目"
+    },
+    {
+      "type": "text",
+      "id": "table_header_value",
+      "label": "Table Value Column Header",
+      "default": "実績データ（オープン1ヶ月半）"
+    },
+    {
+      "type": "header",
+      "content": "Graph Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "chart_image",
+      "label": "Chart/Graph Image"
+    },
+    {
+      "type": "text",
+      "id": "chart_caption",
+      "label": "Chart Caption",
+      "default": "※2024年1月〜7月の売上推移：初月だけではない継続性と成長性"
+    },
+    {
+      "type": "header",
+      "content": "Impact Message"
+    },
+    {
+      "type": "text",
+      "id": "impact_title",
+      "label": "Impact Title",
+      "default": "「CPA 2,500円台」の衝撃"
+    },
+    {
+      "type": "richtext",
+      "id": "impact_text",
+      "label": "Impact Body Text",
+      "default": "<p>一般的なパーソナルジムの顧客獲得単価は3〜4万円と言われています。私たちはその1/10以下のコストで、募集停止せざるを得ないほどの集客を実現しました。大手が200〜300万円かける広告費を、わずか35万円で代替する戦略がここにはあります。</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "table_row",
+      "name": "Table Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Item Label",
+          "default": "項目名"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Item Value",
+          "default": "実績値"
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight Value",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Achievement",
+      "blocks": [
+        {
+          "type": "table_row",
+          "settings": {
+            "label": "LINE登録者数",
+            "value": "529名"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "label": "体験予約数",
+            "value": "209名"
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "label": "入会者数",
+            "value": "136名",
+            "highlight": true
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "label": "初月売上",
+            "value": "2,440,000円",
+            "highlight": true
+          }
+        },
+        {
+          "type": "table_row",
+          "settings": {
+            "label": "顧客獲得単価(CPA)",
+            "value": "2,524円",
+            "highlight": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
